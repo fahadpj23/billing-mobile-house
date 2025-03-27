@@ -1,6 +1,11 @@
+import { useEffect } from "react";
 import TableOperation from "./tableOperations";
+import { useAppDispatch } from "store";
+import { getEntities } from "reducers/attribute.reducer";
 
 const TableList = () => {
+  const dispatch = useAppDispatch();
+
   const TableHead = [
     { title: "Name", key: "name" },
     { title: "Status", key: "status" },
@@ -38,6 +43,11 @@ const TableList = () => {
       ],
     },
   ];
+
+  useEffect(() => {
+    dispatch(getEntities());
+  });
+
   return (
     <div>
       <TableOperation />

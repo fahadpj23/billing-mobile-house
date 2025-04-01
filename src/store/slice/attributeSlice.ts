@@ -3,23 +3,23 @@ import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 // Define the initial state for the user
 interface UserState {
   loading: boolean;
-  data: any | null; // Type based on your API response
+  entities: any | null; // Type based on your API response
   error: string | null;
 }
 
 // Initial state
 const initialState: UserState = {
   loading: false,
-  data: null,
+  entities: null,
   error: null,
 };
 
-// Async thunk to fetch user data
+// Async thunk to fetch attribute data
 export const fetchAttribute = createAsyncThunk(
-  "user/fetchAttribute",
+  "attribute/fetchAttribute",
   async () => {
     const response = await fetch(
-      `https://jsonplaceholder.typicode.com/attributes`
+      `http://localhost:9000/api/attributes/getAttribute`
     );
     if (!response.ok) {
       throw new Error("Failed to fetch user");
@@ -43,7 +43,7 @@ const attributeSlice = createSlice({
         fetchAttribute.fulfilled,
         (state, action: PayloadAction<any>) => {
           state.loading = false;
-          state.data = action.payload;
+          state.entities = action.payload;
         }
       )
       .addCase(fetchAttribute.rejected, (state, action) => {

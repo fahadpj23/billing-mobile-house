@@ -21,7 +21,9 @@
       "@pages/*": ["./pages/*"],
       "@appRouter/*": ["./appRouter/*"],
       "@utils/*": ["./utils/*"],
-      "@constants/*": ["./constants/*"]
+      "@constants/*": ["./constants/*"],
+      "@store/*": ["./store/*"],
+      "@hooks/*": ["./hooks/*"]
     }
   },
   "include": ["src"]

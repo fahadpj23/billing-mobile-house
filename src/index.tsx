@@ -8,9 +8,9 @@ const container = document.getElementById("root");
 const root = createRoot(container!);
 
 root.render(
-  // <Provider store={store}>
-  //   <PersistGate loading={null} persistor={persistor}>
-  <App />
-  //   </PersistGate>
-  // </Provider>
+  <Provider store={store}>
+    <PersistGate loading={<h1>dsd</h1>} persistor={persistor}>
+      <App />
+    </PersistGate>
+  </Provider>
 );

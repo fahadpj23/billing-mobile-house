@@ -9,6 +9,7 @@ const Attributes = () => {
     // Dispatch fetchUser with a sample userId
     dispatch(fetchAttribute());
   }, [dispatch]);
+
   return (
     <div className="w-full overflow-hidden">
       <h1>attributes</h1>

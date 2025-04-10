@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import axios from "axios";
 
 // Define the initial state for the user
 interface UserState {
@@ -25,6 +26,17 @@ export const fetchAttribute = createAsyncThunk(
       throw new Error("Failed to fetch user");
     }
     return response.json();
+  }
+);
+
+export const addAttribute = createAsyncThunk(
+  "attribute/addAttribute",
+  async (data: any) => {
+    const response = await axios.post(
+      `http://localhost:9000/api/attributes/addAttribute`,
+      data
+    );
+    console.log(response);
   }
 );
 

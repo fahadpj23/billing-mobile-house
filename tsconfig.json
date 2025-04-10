@@ -23,7 +23,8 @@
       "@utils/*": ["./utils/*"],
       "@constants/*": ["./constants/*"],
       "@store/*": ["./store/*"],
-      "@hooks/*": ["./hooks/*"]
+      "@hooks/*": ["./hooks/*"],
+      "@tagComponents/*": ["./tagComponents/*"]
     }
   },
   "include": ["src"]

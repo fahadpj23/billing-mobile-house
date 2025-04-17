@@ -1,5 +1,5 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { userReducer } from "./slice/attributeSlice";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { attributeReducer } from "./slice/attributeSlice";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage"; // Local storage for persistence
 
@@ -7,16 +7,26 @@ import storage from "redux-persist/lib/storage"; // Local storage for persistenc
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["attribute"], // Persist only the 'user' slice
+  whitelist: ["auth"],
 };
 
-const persistedReducer = persistReducer(persistConfig, userReducer);
+const rootReducer = combineReducers({
+  attribute: attributeReducer,
+});
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 // Creating the Redux store
 export const store = configureStore({
   reducer: {
     user: persistedReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: ["persist/PERSIST", "persist/REHYDRATE"],
+      },
+    }),
 });
 
 // Create the persistor

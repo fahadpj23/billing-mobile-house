@@ -55,7 +55,7 @@ const attributeSlice = createSlice({
         fetchAttribute.fulfilled,
         (state, action: PayloadAction<any>) => {
           state.loading = false;
-          state.entities = action.payload;
+          state.entities = action.payload.attributeList;
         }
       )
       .addCase(fetchAttribute.rejected, (state, action) => {
@@ -66,4 +66,4 @@ const attributeSlice = createSlice({
 });
 
 // Export the reducer
-export const userReducer = attributeSlice.reducer;
+export const attributeReducer = attributeSlice.reducer;

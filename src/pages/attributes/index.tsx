@@ -13,7 +13,7 @@ const Attributes = () => {
   return (
     <div className="w-full overflow-hidden">
       <h1>attributes</h1>
-      <TableList />
+      <TableList page="attribute" />
     </div>
   );
 };

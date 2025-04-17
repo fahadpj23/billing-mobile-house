@@ -41,14 +41,8 @@ const DynamicForm = () => {
     }, {});
     console.log(formSubmitValue);
     dispatch(addAttribute(formSubmitValue));
-    //  const value= {
-    //     "attributeName":"Df",
-    //     "status":1,
-    //     "attributeValues":[
-
-    //     ]
-    // }
   };
+
   return (
     <form
       onSubmit={handleSubmit}

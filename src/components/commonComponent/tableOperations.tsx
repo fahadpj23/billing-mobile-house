@@ -1,9 +1,14 @@
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useState } from "react";
+import { FC, useState } from "react";
 import DynamicForm from "./dynamicForm";
 import { Modal } from "@mui/material";
-const TableOperation = () => {
+
+interface props {
+  page: string;
+}
+
+const TableOperation: FC<props> = ({ page }) => {
   const [formOpen, setFormOpen] = useState<boolean>(false);
 
   const handleClose = () => setFormOpen(false);

@@ -39,15 +39,12 @@ const DynamicForm = () => {
       obj[field.name] = field.value;
       return obj;
     }, {});
-    console.log(formSubmitValue);
+
     dispatch(addAttribute(formSubmitValue));
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="space-y-3 w-[50vw] md:[30vw] lg:w-[20vw]"
-    >
+    <form onSubmit={handleSubmit} className="space-y-3 ">
       {formFields?.map((field) => {
         return (
           <div>

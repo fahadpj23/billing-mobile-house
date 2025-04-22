@@ -12,6 +12,7 @@ const MultipleInputItems: FC<props> = ({
   field,
 }) => {
   const [inputValue, setInputValue] = useState<string>();
+  const [isDeleted, setIsDeleted] = useState<boolean>(false);
 
   const addValues = () => {
     if (inputValue) {
@@ -20,14 +21,18 @@ const MultipleInputItems: FC<props> = ({
       } else {
         field.value = [...field.value, inputValue];
 
+        setFormFields(formFields);
         setInputValue("");
       }
     }
   };
 
-  console.log(formFields);
   const handleDelete = (deleteValue: string) => {
-    // setValues(values?.filter((value: String) => value !== deleteValue));
+    field.value = field?.value?.filter(
+      (value: String) => value !== deleteValue
+    );
+    setFormFields(formFields);
+    setIsDeleted(!isDeleted);
   };
 
   return (
@@ -42,7 +47,13 @@ const MultipleInputItems: FC<props> = ({
           onChange={(e) => setInputValue(e.target.value)}
           className="w-full"
         />
-        <button onClick={addValues}>Add+</button>
+        <button
+          className="bg-green-500 p-1 text-sm text-white"
+          type="button"
+          onClick={addValues}
+        >
+          Add+
+        </button>
       </div>
       <div className="w-full gap-2">
         {field?.value?.length

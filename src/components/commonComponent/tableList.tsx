@@ -3,6 +3,7 @@ import TableOperation from "./tableOperations";
 import { getTableHead } from "utils/getTableHead";
 import { useAppDispatch, useAppSelector } from "hooks/useRedux";
 import { getTableDataSlice } from "utils/getTaleDataSlice";
+import { objectArrayToArray } from "utils/objectArrayToArray";
 
 interface props {
   page: string;
@@ -19,40 +20,8 @@ const TableList: FC<props> = ({ page }) => {
   useEffect(() => {
     const getTableData = getTableDataSlice(page);
     getTableData && dispatch(getTableData);
-  }, [page]);
+  }, [page, dispatch]);
 
-  const item = [
-    {
-      name: "FDFF",
-      status: "active",
-      values: ["DFd", "FDfd", "klg"],
-    },
-    {
-      name: "FDFF",
-      status: "active",
-      values: ["DFd", "FDfd", "klg"],
-    },
-    {
-      name: "FDFF",
-      status: "active",
-      values: [
-        "DFd",
-        "FDfd",
-        "klg",
-        "DFd",
-        "FDfd",
-        "DFd",
-        "FDfd",
-        "DFd",
-        "FDfd",
-        "klg",
-        "DFd",
-        "FDfd",
-        "DFd",
-        "FDfd",
-      ],
-    },
-  ];
   return (
     <div>
       <TableOperation page={page} />
@@ -72,7 +41,9 @@ const TableList: FC<props> = ({ page }) => {
             <h1 className="w-full text-sm p-2">{key + 1}</h1>
             {TableHead?.map((head: any) => (
               <h1 className="w-full overflow-hidden text-sm p-2">
-                {itemDetails[head.key]?.toString()}
+                {itemDetails[head.key] && Array.isArray(itemDetails[head.key])
+                  ? objectArrayToArray(itemDetails[head.key])?.toString()
+                  : itemDetails[head.key]}
               </h1>
             ))}
           </div>

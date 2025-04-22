@@ -37,8 +37,9 @@ const TableOperation: FC<props> = ({ page }) => {
           onClose={handleClose}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
+          className="flex justify-center items-center"
         >
-          <div className="bg-white absolute top-[40%] left-[45%] p-6">
+          <div className="bg-white absolute  p-6">
             <DynamicForm />
           </div>
         </Modal>

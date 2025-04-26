@@ -1,13 +1,15 @@
 import SelectTag from "formFields/selectTag";
 import InputTag from "formFields/inputTag";
-import { useState } from "react";
 import MultipleInputItems from "formFields/multipleInputItems";
 import { useAppDispatch } from "hooks/useRedux";
 import { addAttribute } from "store/slice/attributeSlice";
+import { useFormik } from "formik";
+import { attributeInitialValue } from "constants/form/attribute/attributeInitialValue";
+import { attributeValidationSchema } from "constants/form/attribute/attributeValidationSchema";
 
 const DynamicForm = () => {
   const dispatch = useAppDispatch();
-  const [formFields, setFormFields] = useState([
+  const formFields = [
     {
       type: "input",
       name: "attributeName",
@@ -31,64 +33,69 @@ const DynamicForm = () => {
       placeholder: "values",
       value: [],
     },
-  ]);
+  ];
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    const formSubmitValue = formFields.reduce((obj: any, field) => {
-      obj[field.name] = field.value;
-      return obj;
-    }, {});
+  const initialValues = attributeInitialValue;
+  const validationSchema = attributeValidationSchema;
 
-    dispatch(addAttribute(formSubmitValue));
-  };
+  const formik = useFormik({
+    enableReinitialize: true,
+    initialValues,
+    validationSchema,
+    onSubmit: (values) => {
+      console.log(values);
+      dispatch(addAttribute(values));
+    },
+  });
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-3 ">
-      {formFields?.map((field) => {
-        return (
-          <div>
-            {(() => {
-              switch (field?.type) {
-                case "input":
-                  return (
-                    <InputTag
-                      key={field.name}
-                      field={field}
-                      formFields={formFields}
-                      setFormFields={setFormFields}
-                    />
-                  );
-                case "multipleInput":
-                  return (
-                    <MultipleInputItems
-                      key={field.name}
-                      formFields={formFields}
-                      field={field}
-                      setFormFields={setFormFields}
-                    />
-                  );
-                case "select":
-                  return (
-                    <SelectTag
-                      key={field.name}
-                      formFields={formFields}
-                      field={field}
-                      setFormFields={setFormFields}
-                    />
-                  );
+    <form onSubmit={formik.handleSubmit}>
+      <div className="space-y-3 ">
+        {formFields?.map((field) => {
+          return (
+            <>
+              {(() => {
+                switch (field?.type) {
+                  case "input":
+                    return (
+                      <InputTag
+                        key={field.name}
+                        field={field}
+                        formik={formik}
+                      />
+                    );
+                  case "multipleInput":
+                    return (
+                      <MultipleInputItems
+                        key={field.name}
+                        field={field}
+                        formik={formik}
+                      />
+                    );
+                  case "select":
+                    return (
+                      <SelectTag
+                        key={field.name}
+                        field={field}
+                        formik={formik}
+                      />
+                    );
 
-                default:
-                  return <div></div>;
-              }
-            })()}
-          </div>
-        );
-      })}
-      <div className="flex justify-end">
-        <button className="bg-green-500 text-white p-1 text-sm " type="submit">
-          Upload
-        </button>
+                  default:
+                    return <div></div>;
+                }
+              })()}
+            </>
+          );
+        })}
+        <div className="flex justify-end">
+          <button
+            className="bg-green-500 text-white p-1 text-sm "
+            type="submit"
+          >
+            Upload
+          </button>
+        </div>
       </div>
     </form>
   );

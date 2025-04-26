@@ -2,36 +2,33 @@ import { Chip, TextField } from "@mui/material";
 import { FC, useState } from "react";
 
 interface props {
-  formFields: any;
-  setFormFields: any;
   field: any;
+  formik: any;
 }
-const MultipleInputItems: FC<props> = ({
-  formFields,
-  setFormFields,
-  field,
-}) => {
+const MultipleInputItems: FC<props> = ({ field, formik }) => {
   const [inputValue, setInputValue] = useState<string>();
   const [isDeleted, setIsDeleted] = useState<boolean>(false);
 
   const addValues = () => {
     if (inputValue) {
-      if (field?.value?.length && field?.value.includes(inputValue)) {
+      if (
+        Array.isArray(formik.values[field.name]) &&
+        formik.values[field.name].includes(inputValue)
+      ) {
         alert("already added");
       } else {
-        field.value = [...field.value, inputValue];
-
-        setFormFields(formFields);
+        formik.values[field.name] = [...formik.values[field.name], inputValue];
         setInputValue("");
       }
     }
   };
-
   const handleDelete = (deleteValue: string) => {
-    field.value = field?.value?.filter(
-      (value: String) => value !== deleteValue
-    );
-    setFormFields(formFields);
+    const updatedValue =
+      Array.isArray(formik.values[field.name]) &&
+      formik.values[field.name]?.filter(
+        (value: String) => value !== deleteValue
+      );
+    formik.values[field.name] = updatedValue;
     setIsDeleted(!isDeleted);
   };
 
@@ -56,8 +53,8 @@ const MultipleInputItems: FC<props> = ({
         </button>
       </div>
       <div className="w-full gap-2">
-        {field?.value?.length
-          ? field?.value?.map((value: string) => (
+        {Array.isArray(formik.values[field.name])
+          ? formik.values[field.name]?.map((value: string) => (
               <Chip
                 className="m-2"
                 key={value}

@@ -40,7 +40,7 @@ const TableOperation: FC<props> = ({ page }) => {
           className="flex justify-center items-center"
         >
           <div className="bg-white absolute  p-6">
-            <DynamicForm />
+            <DynamicForm page={page} />
           </div>
         </Modal>
       )}

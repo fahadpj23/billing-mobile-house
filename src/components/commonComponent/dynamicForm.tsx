@@ -4,46 +4,25 @@ import MultipleInputItems from "formFields/multipleInputItems";
 import { useAppDispatch } from "hooks/useRedux";
 import { addAttribute } from "store/slice/attributeSlice";
 import { useFormik } from "formik";
-import { attributeInitialValue } from "constants/form/attribute/attributeInitialValue";
-import { attributeValidationSchema } from "constants/form/attribute/attributeValidationSchema";
+import { getFormDetails } from "utils/getFormDetails";
+import { FC, useState } from "react";
+// import { attributeInitialValue } from "constants/attributePage/form/initialValue";
+// import { attributeValidationSchema } from "constants/attributePage/form/attributeValidationSchema";
 
-const DynamicForm = () => {
+interface props {
+  page: string;
+}
+
+const DynamicForm: FC<props> = ({ page }) => {
   const dispatch = useAppDispatch();
-  const formFields = [
-    {
-      type: "input",
-      name: "attributeName",
-      placeholder: "name",
-      value: "",
-    },
-
-    {
-      type: "select",
-      name: "status",
-      placeholder: "status",
-      menuitems: [
-        { value: 1, title: "Active" },
-        { value: 0, title: "Inactive" },
-      ],
-      value: 1,
-    },
-    {
-      type: "multipleInput",
-      name: "attributeValues",
-      placeholder: "values",
-      value: [],
-    },
-  ];
-
-  const initialValues = attributeInitialValue;
-  const validationSchema = attributeValidationSchema;
-
+  const [formDetails, setFormDetails] = useState(getFormDetails(page));
+  const initialValues = formDetails ? formDetails.initialValue : [];
+  const validationSchema = formDetails?.validationSchema;
   const formik = useFormik({
     enableReinitialize: true,
     initialValues,
     validationSchema,
     onSubmit: (values) => {
-      console.log(values);
       dispatch(addAttribute(values));
     },
   });
@@ -51,7 +30,7 @@ const DynamicForm = () => {
   return (
     <form onSubmit={formik.handleSubmit}>
       <div className="space-y-3 ">
-        {formFields?.map((field) => {
+        {formDetails?.formField?.map((field) => {
           return (
             <>
               {(() => {

@@ -1,4 +1,4 @@
-export const ATTRIBUTE_TABLE_FORM = [
+export const attributeFormField = [
   {
     type: "input",
     name: "attributeName",
